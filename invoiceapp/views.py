@@ -30,7 +30,8 @@ def logout_user(request):
         logout(request)
         return render(request, 'invoiceapp/index.html', {'message': 'You have successfully logged out',})
     return render(request, 'invoiceapp/login.html',{'message':'log in first'})
-    #1234
+    
+
 
 
 class Account(View):
