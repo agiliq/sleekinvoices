@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Easylooks</title>
+
+	<meta charset="utf8">
+    {% load staticfiles %}
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'invoiceapp/style.css' %}"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+
+<body id="body">
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+<div class="container-fluid">
+{% if message %}
+  <h3 style="text-align: center;margin-top: 40px">{{ message }}</h3>
+{% endif %}
+   <div id="account_header">EASYlooKs<span style="font-size: medium; "><sup>cloud</sup><sub>InvoiCing</sub></span></div>
+  <div class="row">
+    <div class="panel panel-default" id="account_signin_panel">
+        <div class="panel-heading" >
+            <h3 style="font-family: Harrington">Customer Details : </h3>
+        </div>
+        <div class="panel-body" id="sign_in_panel_body">
+                 <div class="col-sm-12 col-md-6 col-lg-6">
+                    <form role="form" action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        {% csrf_token %}
+                            {% for field in form %}
+                                <div class="form-group">
+                                     <div class="col-sm-offset-1 col-sm-10 ">
+                                     <span class="text-danger small">{{ field.errors }}</span>
+                                     </div>
+                                      <label class="control-label col-sm-6 col-md-6" id="aaa" >{{ field.label_tag }}</label>
+                                      <div class="col-sm-6 col-md-6"  >{{ field }}</div>
+                                </div>
+                            {% endfor %}
+                        <div class="form-group">
+                           <div class="col-sm-offset-6 col-sm-10">
+                                <button type="submit" class="btn btn-default">Send as Email</button>
+                           </div>
+                        </div>
+                    </form>
+                </div>
+        </div>
+            <div class="panel-footer" id="panelfooter">With this you agree with the company's policies</div>
+        </div>
+     </div>
+   </div>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
