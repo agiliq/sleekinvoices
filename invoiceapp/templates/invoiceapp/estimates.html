@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Easylooks</title>
+
+	<meta charset="utf8">
+    {% load staticfiles %}
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'invoiceapp/style.css' %}"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</head>
+
+<body id="body">
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+<div class="container-fluid">
+{% if message %}
+  <h3 style="text-align: center;margin-top: 40px">{{ message }}</h3>
+{% endif %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th> Payment Status</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for invoice in all_invoices %}
+          <tr>
+              <td>{{ invoice.raise_for }}</td>
+              <td>{{ invoice.total_money }}&nbsp;{{ invoice.currency }}</td>
+              <td>{{ invoice.date_created }}</td>
+              <td>
+                  {% if invoice.paid %}
+                       paid
+                  {% else %}
+                       unpaid
+                  {% endif %}
+              </td>
+          <td>
+              <form action = "{% url 'invoiceapp:changestatus' invoice.id %}" method="post">
+                  {% csrf_token %}
+                <input type="submit" value="Toggle"/>
+              </form>
+          </td>
+          </tr>
+      {% endfor %}
+
+    </tbody>
+</table>
+
+<h3>{{ amount }}</h3>
+
+
+</div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

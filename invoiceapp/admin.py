@@ -1,4 +1,5 @@
 from django.contrib import admin
-from.models import company_credentials
+from.models import Company_credentials,Raise_invoice
 
-admin.site.register(company_credentials)
+admin.site.register(Company_credentials)
+admin.site.register(Raise_invoice)
