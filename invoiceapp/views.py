@@ -11,6 +11,9 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.pagesizes import landscape
 import datetime
 from io import BytesIO
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Paragraph
+from reportlab.pdfgen.canvas import Canvas
 
 
 def login_user(request):
@@ -20,7 +23,7 @@ def login_user(request):
         user = authenticate(username=username, password=password)
 
         if user is not None:
-            if user.is_active():
+            if user.is_active:
                 login(request, user)
                 return render(request, 'invoiceapp/index.html', {'message': 'You have successfully logged in'})
             return render(request, 'invoiceapp/index.html',
@@ -88,45 +91,36 @@ class Index(View):
         return render(request, self.template_name, {'message': 'Sign in again ', 'form': form,})
 
 
-def import_data():
-    last_name = 'Setia'
-    first_name = 'Gaurav'
-    course_name = 'Agiliq'
-    pdf_file_name = 'my_pdf' + '.pdf'
-    pdf = generate_certificate(first_name, last_name, course_name, pdf_file_name)
-    return pdf
 
 
-def generate_certificate(first_name, last_name, course_name, pdf_file_name):
-    attendee_name = first_name + ' ' + last_name
+def generate_certificate(description_of_items,total_money ):
+
     buffer = BytesIO()
-    c = canvas.Canvas(pdf_file_name, pagesize=landscape(letter))
-    x = 570
-    c.setFont('Helvetica-Bold', 13, leading=None)
-    l = ['Agiliq info solutions', 'Opposite D-mart', 'Hyderabad']
-    for i in l:
-        c.drawCentredString(85, x, i)
-        x = x - 16
-    c.setFont('Helvetica-Bold', 44, leading=None)
-    c.drawCentredString(398, 548, "INVOICE")
-    now = datetime.datetime.now()
-    c.setFont('Helvetica-Bold', 16, leading=None)
-    c.drawCentredString(630, 554, str(now.year) + '/' + str(now.month) + '/' + str(now.day))
-    c.line(10, 500, 1500, 500)
-    c.setFont('Helvetica', 42, leading=None)
-    c.drawCentredString(415, 450, "Certificate of Completion")
-    c.setFont('Helvetica', 24, leading=None)
-    c.drawCentredString(415, 420, "This certificate is presented to:")
-    c.setFont('Helvetica-Bold', 34, leading=None)
-    c.drawCentredString(415, 365, attendee_name)
-    c.setFont('Helvetica', 24, leading=None)
-    c.drawCentredString(415, 320, "For completing the following course:")
-    c.setFont('Helvetica', 20, leading=None)
-    c.drawCentredString(415, 280, course_name)
-
-    c.showPage()
-
-    c.save()
+    styleSheet = getSampleStyleSheet()
+    style = styleSheet['Normal']
+    canv = Canvas('my_pdf.pdf')
+    canv.setFont('Helvetica-Bold', 44, leading=None)
+    canv.drawCentredString(308, 800, "INVOICE")
+    canv.line(0, 785, 800, 785)
+    canv.setFont('Helvetica', 21, leading=None)
+    canv.drawCentredString(68, 760, "Description:")
+    P = Paragraph(description_of_items, style)
+    canv.setFont('Helvetica', 6, leading=None)
+    aW = 500  # available width and height
+    aH = 720
+    w, h = P.wrap(aW, aH)  # find required space
+    print(w)
+    print(h)
+    if w <= aW and h <= aH:
+        P.drawOn(canv, 12, aH)
+    # aH = aH - h # reduce the available height
+    print(aH)
+    canv.line(0, aH - 10, 800, aH - 10)
+    canv.setFont('Helvetica', 18, leading=None)
+    canv.drawCentredString(80, aH - 35, "Amount Payable:")
+    canv.setFont('Helvetica', 12, leading=None)
+    canv.drawCentredString(45, aH - 55, str(total_money) + ' ' + 'Dollars')
+    canv.save()
     pdf = buffer.getvalue()
     buffer.close()
     return pdf
@@ -154,7 +148,7 @@ class RaiseInvoice(View):
             sender = request.user.email
             reciever = form.cleaned_data['email_to']
             receivers = [reciever]
-            pdf = import_data()
+            pdf = generate_certificate(description_of_items,total_money)
             msg = EmailMessage(subject, message, sender, receivers)
             msg.attach_file('my_pdf.pdf', pdf)
             msg.send(fail_silently=True)
@@ -168,6 +162,8 @@ class RaiseInvoice(View):
 
 
 def Estimates(request):
+    if not request.user.is_authenticated():
+        return render(request,'invoiceapp/login.html',{'message':'Login First'})
     template_name = 'invoiceapp/estimates.html'
     all_invoices = Raise_invoice.objects.filter(user=request.user).order_by('-pk')
     total = 0

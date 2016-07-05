@@ -10,5 +10,7 @@ urlpatterns = [
     url(r'^account/$', views.Account.as_view(),name='account'),
     url(r'^estimates/$', views.Estimates,name='estimates'),
     url(r'^status/(?P<id>[0-9]+)/$' , views.Changestatus , name='changestatus'),
+    url(r'^login/$', views.login_user, name="login"),
+    url(r'^logout/$', views.logout_user, name="logout"),
 
 ]
