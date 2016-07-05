@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b1b53ba-c230-43e3-a352-e64aa637faaa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/invoiceapp/static/invoiceapp/style.css" afterPath="$PROJECT_DIR$/invoiceapp/static/invoiceapp/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/invoiceapp/templates/invoiceapp/estimates.html" afterPath="$PROJECT_DIR$/invoiceapp/templates/invoiceapp/estimates.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/invoiceapp/templates/invoiceapp/index.html" afterPath="$PROJECT_DIR$/invoiceapp/templates/invoiceapp/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/invoiceapp/templates/invoiceapp/raise_invoice.html" afterPath="$PROJECT_DIR$/invoiceapp/templates/invoiceapp/raise_invoice.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/invoiceapp/urls.py" afterPath="$PROJECT_DIR$/invoiceapp/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/invoiceapp/views.py" afterPath="$PROJECT_DIR$/invoiceapp/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/invoice/settings.py" afterPath="$PROJECT_DIR$/invoice/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/invoice/wsgi.py" afterPath="$PROJECT_DIR$/invoice/wsgi.py" />
     </list>
     <ignored path="invoice.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -102,12 +96,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="raise_invoice.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="raise_invoice.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/invoiceapp/templates/invoiceapp/raise_invoice.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="35" column="75" selection-start-line="35" selection-start-column="75" selection-end-line="35" selection-end-column="75" />
+            <state relative-caret-position="185">
+              <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/invoice/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wsgi.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/invoice/wsgi.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#46#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -146,7 +162,6 @@
         <option value="$PROJECT_DIR$/invoiceapp/static/invoiceapp/static.css" />
         <option value="$PROJECT_DIR$/invoiceapp/templates/invoiceapp/signin.html" />
         <option value="$PROJECT_DIR$/invoiceapp/templates/invoiceapp/account.html" />
-        <option value="$PROJECT_DIR$/invoice/settings.py" />
         <option value="$PROJECT_DIR$/invoiceapp/admin.py" />
         <option value="$PROJECT_DIR$/invoiceapp/models.py" />
         <option value="$PROJECT_DIR$/invoiceapp/forms.py" />
@@ -157,6 +172,8 @@
         <option value="$PROJECT_DIR$/invoiceapp/templates/invoiceapp/login.html" />
         <option value="$PROJECT_DIR$/invoiceapp/templates/invoiceapp/index.html" />
         <option value="$PROJECT_DIR$/invoiceapp/templates/invoiceapp/raise_invoice.html" />
+        <option value="$PROJECT_DIR$/invoice/wsgi.py" />
+        <option value="$PROJECT_DIR$/invoice/settings.py" />
       </list>
     </option>
   </component>
@@ -222,28 +239,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="invoice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="invoiceapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="invoice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="invoice" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="invoiceapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -614,7 +609,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/invoiceapp/templates/invoiceapp/signin.html" />
     <entry file="file://$PROJECT_DIR$/static/style.css" />
     <entry file="file://$PROJECT_DIR$/invoiceapp/forms.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -846,14 +840,6 @@
     <entry file="file://$PROJECT_DIR$/static/style.css" />
     <entry file="file://$PROJECT_DIR$/invoiceapp/static/invoiceapp/static.css" />
     <entry file="file://$PROJECT_DIR$/invoiceapp/templates/invoiceapp/signin.html" />
-    <entry file="file://$PROJECT_DIR$/invoice/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
-          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/invoiceapp/apps.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -962,8 +948,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/invoiceapp/templates/invoiceapp/raise_invoice.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="35" column="75" selection-start-line="35" selection-start-column="75" selection-end-line="35" selection-end-column="75" />
+        <state relative-caret-position="185">
+          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/invoice/wsgi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/invoice/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
           <folding />
         </state>
       </provider>
