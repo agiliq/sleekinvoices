@@ -168,8 +168,7 @@ def Estimates(request):
     all_invoices = Raise_invoice.objects.filter(user=request.user).order_by('-pk')
     total = 0
     for invoice in all_invoices:
-        if invoice.paid == False:
-            total = total + invoice.total_money
+        total = total + invoice.total_money
     return render(request,template_name,{'all_invoices':all_invoices,'amount':total})
 
 
@@ -177,13 +176,29 @@ def Estimates(request):
 
 def Changestatus(request,id):
     selected_invoice = Raise_invoice.objects.get(pk=id)
-    if selected_invoice.paid == True:
+    amount = request.POST['amount']
+    amount = int(amount)
+    total_money = selected_invoice.total_money
+    if amount >  total_money:
+        pass
+    else:
+        selected_invoice.total_money = (total_money) - amount
+    selected_invoice.save()
+    return redirect('invoiceapp:estimates')
+
+
+
+
+
+
+
+
+    """if selected_invoice.paid == True:
         selected_invoice.paid = False
     else:
         selected_invoice.paid = True
     selected_invoice.save()
-    return redirect('invoiceapp:estimates')
-
+    return redirect('invoiceapp:estimates')"""
 
 
 

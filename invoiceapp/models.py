@@ -21,7 +21,7 @@ class Raise_invoice(models.Model):
     description_of_items = models.TextField(max_length=1000)
     currency = models.CharField(max_length=10)
     total_money = models.IntegerField(default=100)
-    paid = models.BooleanField(default=False)
+
     date_created = models.DateField(auto_now=False,auto_now_add=True)
     message =  models.TextField(max_length=1000,default='Hey! Attatched along is your Invoice')
 

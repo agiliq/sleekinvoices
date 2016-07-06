@@ -54,7 +54,8 @@
             <th>Amount</th>
             <th>Date</th>
             <th>Status</th>
-            <th> Payment Status</th>
+           <!-- <th> Payment Status</th> -->
+            <th> Amount Paid</th>
         </tr>
     </thead>
     <tbody>
@@ -64,16 +65,24 @@
               <td>{{ invoice.total_money }}&nbsp;{{ invoice.currency }}</td>
               <td>{{ invoice.date_created }}</td>
               <td>
-                  {% if invoice.paid %}
+                  {% if invoice.total_money == 0 %}
                        paid
                   {% else %}
                        unpaid
                   {% endif %}
               </td>
-          <td>
+          <!--<td>
               <form action = "{% url 'invoiceapp:changestatus' invoice.id %}" method="post">
                   {% csrf_token %}
                 <input type="submit" value="Toggle"/>
+              </form>
+          </td> -->
+
+           <td>
+              <form action = "{% url 'invoiceapp:changestatus' invoice.id %}" method="post">
+                  {% csrf_token %}
+                  <input type="text" name="amount" maxlength="15"/>
+                  <input type="submit" value="Submit"/>
               </form>
           </td>
           </tr>
@@ -81,8 +90,8 @@
 
     </tbody>
 </table>
+<h5>Amount Awaited: {{ amount }} Dollars</h5>
 
-<h3>{{ amount }}</h3>
 
 
 </div>
