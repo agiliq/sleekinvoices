@@ -62,10 +62,10 @@
       {% for invoice in all_invoices %}
           <tr>
               <td>{{ invoice.raise_for }}</td>
-              <td>{{ invoice.total_money }}&nbsp;{{ invoice.currency }}</td>
+              <td>{{ invoice.cost }}&nbsp;{{ invoice.currency }}</td>
               <td>{{ invoice.date_created }}</td>
               <td>
-                  {% if invoice.total_money == 0 %}
+                  {% if invoice.cost == 0 %}
                        paid
                   {% else %}
                        unpaid

@@ -18,12 +18,12 @@ class Raise_invoice(models.Model):
     user = models.ForeignKey(User,default=1)
     raise_for = models.CharField(max_length=200)
     email_to = models.EmailField(default='xyz@yahoo.com')
-    description_of_items = models.TextField(max_length=1000)
+    description_of_items = models.CharField(max_length=150)
     currency = models.CharField(max_length=10)
-    total_money = models.IntegerField(default=100)
-
+    cost = models.IntegerField(default=100)
+    quantity = models.IntegerField(default=1)
     date_created = models.DateField(auto_now=False,auto_now_add=True)
-    message =  models.TextField(max_length=1000,default='Hey! Attatched along is your Invoice')
+    message =  models.TextField(max_length=500,default='Hey! Attatched along is your Invoice')
 
     def __str__(self):
         return self.raise_for

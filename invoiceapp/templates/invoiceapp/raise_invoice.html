@@ -66,9 +66,28 @@
                                       <div class="col-sm-6 col-md-6"  >{{ field }}</div>
                                 </div>
                             {% endfor %}
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <!-- dd  -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  {% for field in formset %}
+                                      <tr>
+                                          <td>{{ field }}</td>
+
+                                      </tr>
+
+                                  {% endfor %}
+
+                                </tbody>
+                            </table>
+
+
                         <div class="form-group">
                            <div class="col-sm-offset-6 col-sm-10">
-                                <button type="submit" class="btn btn-default">Send as Email</button>
+                                <button type="submit" class="btn btn-info btn-block">Send as Email</button>
                            </div>
                         </div>
                     </form>
@@ -82,7 +101,6 @@
 </body>
 
 </html>
-
 
 
 

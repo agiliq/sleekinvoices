@@ -14,7 +14,7 @@ from io import BytesIO
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Paragraph
 from reportlab.pdfgen.canvas import Canvas
-
+from django.forms import modelformset_factory
 
 def login_user(request):
     if request.method == "POST":
@@ -93,7 +93,7 @@ class Index(View):
 
 
 
-def generate_certificate(description_of_items,total_money ):
+def generate_certificate(description_of_items,cost ):
 
     buffer = BytesIO()
     styleSheet = getSampleStyleSheet()
@@ -119,7 +119,7 @@ def generate_certificate(description_of_items,total_money ):
     canv.setFont('Helvetica', 18, leading=None)
     canv.drawCentredString(80, aH - 35, "Amount Payable:")
     canv.setFont('Helvetica', 12, leading=None)
-    canv.drawCentredString(45, aH - 55, str(total_money) + ' ' + 'Dollars')
+    canv.drawCentredString(45, aH - 55, str(cost) + ' ' + 'Dollars')
     canv.save()
     pdf = buffer.getvalue()
     buffer.close()
@@ -129,34 +129,48 @@ def generate_certificate(description_of_items,total_money ):
 class RaiseInvoice(View):
     form_class = RaiseInvoiceForm
     template_name = 'invoiceapp/raise_invoice.html'
-
+    Raise_invoiceformset = modelformset_factory(Raise_invoice, fields=('description_of_items','quantity','cost'), extra=2)
     def get(self, request):
         form = self.form_class(None)
-        return render(request, self.template_name, {'form': form})
+        formset = self.Raise_invoiceformset(queryset=Raise_invoice.objects.none())
+        return render(request, self.template_name, {'form': form,'formset':formset})
 
     def post(self, request):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-
-            subject = 'Invoice'
-            message = form.cleaned_data['message']
-            description_of_items = form.cleaned_data['description_of_items']
-            raise_for = form.cleaned_data['raise_for']
-            currency = form.cleaned_data['currency']
-            total_money = form.cleaned_data['total_money']
-            sender = request.user.email
-            reciever = form.cleaned_data['email_to']
-            receivers = [reciever]
-            pdf = generate_certificate(description_of_items,total_money)
-            msg = EmailMessage(subject, message, sender, receivers)
-            msg.attach_file('my_pdf.pdf', pdf)
-            msg.send(fail_silently=True)
-            raiseinvoice = form.save(commit=False)
-            raiseinvoice.user = request.user
-            raiseinvoice.save()
-            return redirect('invoiceapp:index')
-        return render(request, self.template_name,{'form': self.form_class(None), 'message': "Please Fill the Form again",})
+           description_of_items = []
+           cost = 0
+           for i in range(2):
+               x = 'form-' + str(i) + '-description_of_items'
+               y = 'form-' + str(i) + '-cost'
+               z = 'form-' + str(i) + '-quantity'
+               x = str(x)
+               y = str(y)
+               p = request.POST[x]
+               q = request.POST[y]
+               r = request.POST[z]
+               cost = int(cost) + (int(q)*int(r))
+               description_of_items.append(p)
+           subject = 'Invoice'
+           message = form.cleaned_data['message']
+           raise_for = form.cleaned_data['raise_for']
+           currency = form.cleaned_data['currency']
+           #cost = form.cleaned_data['cost']
+           sender = request.user.email
+           reciever = form.cleaned_data['email_to']
+           receivers = [reciever]
+           collect = ' '.join(description_of_items)
+           pdf = generate_certificate(collect,cost)
+           msg = EmailMessage(subject, message, sender, receivers)
+           msg.attach_file('my_pdf.pdf', pdf)
+           msg.send(fail_silently=True)
+           raiseinvoice = form.save(commit=False)
+           raiseinvoice.user = request.user
+           raiseinvoice.cost = cost
+           raiseinvoice.save()
+           return redirect('invoiceapp:index')
+        return redirect('invoiceapp:raiseinvoice')
 
 
 
@@ -168,7 +182,7 @@ def Estimates(request):
     all_invoices = Raise_invoice.objects.filter(user=request.user).order_by('-pk')
     total = 0
     for invoice in all_invoices:
-        total = total + invoice.total_money
+        total = total + invoice.cost
     return render(request,template_name,{'all_invoices':all_invoices,'amount':total})
 
 
@@ -178,11 +192,11 @@ def Changestatus(request,id):
     selected_invoice = Raise_invoice.objects.get(pk=id)
     amount = request.POST['amount']
     amount = int(amount)
-    total_money = selected_invoice.total_money
-    if amount >  total_money:
+    cost = selected_invoice.cost
+    if amount > cost:
         pass
     else:
-        selected_invoice.total_money = (total_money) - amount
+        selected_invoice.cost = (cost) - amount
     selected_invoice.save()
     return redirect('invoiceapp:estimates')
 
@@ -192,13 +206,6 @@ def Changestatus(request,id):
 
 
 
-
-    """if selected_invoice.paid == True:
-        selected_invoice.paid = False
-    else:
-        selected_invoice.paid = True
-    selected_invoice.save()
-    return redirect('invoiceapp:estimates')"""
 
 
 

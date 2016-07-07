@@ -25,4 +25,4 @@ class RaiseInvoiceForm(forms.ModelForm):
 
     class Meta:
         model = Raise_invoice
-        fields = ['raise_for','email_to','description_of_items','currency','total_money','message']
+        fields = ['raise_for','email_to','currency','message']
