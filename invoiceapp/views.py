@@ -109,12 +109,9 @@ def generate_certificate(description_of_items,cost ):
     aW = 500  # available width and height
     aH = 720
     w, h = P.wrap(aW, aH)  # find required space
-    print(w)
-    print(h)
     if w <= aW and h <= aH:
         P.drawOn(canv, 12, aH)
     # aH = aH - h # reduce the available height
-    print(aH)
     canv.line(0, aH - 10, 800, aH - 10)
     canv.setFont('Helvetica', 18, leading=None)
     canv.drawCentredString(80, aH - 35, "Amount Payable:")

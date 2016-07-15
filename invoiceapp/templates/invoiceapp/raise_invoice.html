@@ -66,23 +66,48 @@
                                       <div class="col-sm-6 col-md-6"  >{{ field }}</div>
                                 </div>
                             {% endfor %}
-                            <table class="table">
+                            <!--<table class="table">
                                 <thead>
                                     <tr>
                                         <!-- dd  -->
-                                    </tr>
+                                <!--    </tr>
                                 </thead>
                                 <tbody>
-                                  {% for field in formset %}
+                                  for field in formset
                                       <tr>
-                                          <td>{{ field }}</td>
+                                          <td>field</td>
 
                                       </tr>
 
-                                  {% endfor %}
+                                  endfor
 
                                 </tbody>
-                            </table>
+                            </table>  -->
+
+                         <table class="table">
+                                <thead >
+                                    <tr id="heading_head">
+                                        <th>Description</th>
+                                        <th>Cost</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                      <tr>
+                                          <td><input id="1" maxlength="50" name="form-0-description_of_items" type="text" ></td>
+                                         <td><input id="2" maxlength="50" name="form-0-cost" type="text" ></td>
+                                          <td><input id="3" maxlength="50" name="form-0-quantity" type="text" ></td>
+
+                                      </tr>
+                                  <tr>
+                                        <td><input id="4" maxlength="50" name="form-1-description_of_items" type="text" ></td>
+                                         <td><input id="5" maxlength="50" name="form-1-cost" type="text" ></td>
+                                          <td><input id="6" maxlength="50" name="form-1-quantity" type="text" ></td>
+
+                                      </tr>
+                                </tbody>
+                         </table>
 
 
                         <div class="form-group">
@@ -93,11 +118,36 @@
                     </form>
                 </div>
         </div>
+
             <div class="panel-footer" id="panelfooter">With this you agree with the company's policies</div>
         </div>
-     </div>
-   </div>
 
+    </div>
+    </div>
+  <table class="table">
+                                <thead >
+                                    <tr id="index_page_header">
+                                        <th>Description</th>
+                                        <th>Cost</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                      <tr >
+                                          <td><input id="1" maxlength="50" name="form-0-description_of_items" type="text" ></td>
+                                         <td><input id="2" maxlength="50" name="form-0-cost" type="text" ></td>
+                                          <td><input id="3" maxlength="50" name="form-0-quantity" type="text" ></td>
+
+                                      </tr>
+                                  <tr >
+                                        <td><input id="4" maxlength="50" name="form-1-description_of_items" type="text" ></td>
+                                         <td><input id="5" maxlength="50" name="form-1-cost" type="text" ></td>
+                                          <td><input id="6" maxlength="50" name="form-1-quantity" type="text" ></td>
+
+                                      </tr>
+                                </tbody>
+                         </table>
 </body>
 
 </html>
