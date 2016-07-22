@@ -8,7 +8,7 @@ class Company_credentials(models.Model):
     company_address = models.CharField(max_length=500)
     country = models.CharField(max_length=25)
     phone_number = models.CharField(max_length=30)
-    website_url = models.CharField(max_length=100)
+    website_url = models.URLField(max_length=100)
 
     def __str__(self):
         return self.company_name

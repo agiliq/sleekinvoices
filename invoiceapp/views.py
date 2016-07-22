@@ -68,8 +68,11 @@ class Index(View):
     template_name = "invoiceapp/index.html"
 
     def get(self, request):
+        logged = False
+        if request.user.is_authenticated():
+            logged = True
         form = self.form_class(None)
-        return render(request, self.template_name, {'form': form,})
+        return render(request, self.template_name, {'form': form,'logged':logged})
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -93,30 +96,64 @@ class Index(View):
 
 
 
-def generate_certificate(description_of_items,cost ):
+def generate_certificate(description_of_items,cost_of_items,amount,cost,qty,raise_for,request ):
 
     buffer = BytesIO()
     styleSheet = getSampleStyleSheet()
     style = styleSheet['Normal']
     canv = Canvas('my_pdf.pdf')
+    canv.setFillColorRGB(0, 0, 255)
     canv.setFont('Helvetica-Bold', 44, leading=None)
-    canv.drawCentredString(308, 800, "INVOICE")
+    canv.drawCentredString(102, 800, "INVOICE")
+    canv.setFont('Helvetica-Bold', 8, leading=None)
+
+    #canv.drawCentredString(38, 824, "From:")
+
+    object_model = Company_credentials.objects.get(pk=request.user.pk)
+    canv.setFillColorRGB(0, 0, 255)
+    canv.drawCentredString(480, 826, object_model.company_name)
+    canv.drawCentredString(480, 813, object_model.website_url)
+    canv.drawCentredString(480, 801, object_model.country + ',' + object_model.phone_number)
+    #canv.drawCentredString(480, 790, object_model.email)
+    canv.setFillColorRGB(0, 0, 0)
+
+    canv.drawCentredString(480, 790, "Raised on:" + str(datetime.date.today()) )
     canv.line(0, 785, 800, 785)
     canv.setFont('Helvetica', 21, leading=None)
+    canv.setFillColorRGB(0, 0, 255)
     canv.drawCentredString(68, 760, "Description:")
-    P = Paragraph(description_of_items, style)
-    canv.setFont('Helvetica', 6, leading=None)
-    aW = 500  # available width and height
-    aH = 720
+    canv.setFillColorRGB(0, 0, 0)
+    canv.setFont('Helvetica-Bold', 14, leading=None)
+    canv.drawCentredString(120, 730, "ITEMS")
+    canv.drawCentredString(320, 730, "RATE")
+    canv.drawCentredString(410, 730, "QTY")
+    canv.drawCentredString(500, 730, "AMOUNT")
+    canv.setFont('Helvetica', 8, leading=None)
+    y_coordinate = 710
+    chaska = 0
+    length = len(description_of_items)
+    for chaska in range(length):
+        canv.drawCentredString(120, y_coordinate,description_of_items[chaska])
+        canv.drawCentredString(320, y_coordinate, str(cost_of_items[chaska]))
+        canv.drawCentredString(410, y_coordinate, str(qty[chaska]))
+        canv.drawCentredString(500, y_coordinate, '$' + str(amount[chaska]))
+        y_coordinate = y_coordinate - 15
+    y_coordinate = y_coordinate - 25
+    canv.line(310, y_coordinate, 580, y_coordinate)
+    canv.setFont('Helvetica-Bold', 12, leading=None)
+    canv.drawCentredString(410, y_coordinate-16, "Total")
+    canv.drawCentredString(500, y_coordinate-16, '$' + str(cost))
+    canv.setFillColorRGB(0,0,255)
+    canv.setFont('Helvetica', 16, leading=None)
+    canv.drawCentredString(55, y_coordinate-16, "Raised For:")
+    canv.setFillColorRGB(0, 0, 0)
+    P = Paragraph(raise_for, style)
+    aW = 180
+    aH = y_coordinate-46
     w, h = P.wrap(aW, aH)  # find required space
     if w <= aW and h <= aH:
         P.drawOn(canv, 12, aH)
-    # aH = aH - h # reduce the available height
-    canv.line(0, aH - 10, 800, aH - 10)
-    canv.setFont('Helvetica', 18, leading=None)
-    canv.drawCentredString(80, aH - 35, "Amount Payable:")
-    canv.setFont('Helvetica', 12, leading=None)
-    canv.drawCentredString(45, aH - 55, str(cost) + ' ' + 'Dollars')
+        aH = aH - h  # reduce the available height
     canv.save()
     pdf = buffer.getvalue()
     buffer.close()
@@ -124,21 +161,28 @@ def generate_certificate(description_of_items,cost ):
 
 
 class RaiseInvoice(View):
+
+
     form_class = RaiseInvoiceForm
     template_name = 'invoiceapp/raise_invoice.html'
-    Raise_invoiceformset = modelformset_factory(Raise_invoice, fields=('description_of_items','quantity','cost'), extra=2)
+    #Raise_invoiceformset = modelformset_factory(Raise_invoice, fields=('description_of_items','quantity','cost'), extra=2)
     def get(self, request):
+        if not request.user.is_authenticated():
+            return render(request,'invoiceapp/login.html',{'message':'Login First'})
         form = self.form_class(None)
-        formset = self.Raise_invoiceformset(queryset=Raise_invoice.objects.none())
-        return render(request, self.template_name, {'form': form,'formset':formset})
+        #formset = self.Raise_invoiceformset(queryset=Raise_invoice.objects.none())
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         form = self.form_class(request.POST)
 
         if form.is_valid():
            description_of_items = []
+           cost_of_items = []
+           amount = []
+           qty = []
            cost = 0
-           for i in range(2):
+           for i in range(3):
                x = 'form-' + str(i) + '-description_of_items'
                y = 'form-' + str(i) + '-cost'
                z = 'form-' + str(i) + '-quantity'
@@ -147,18 +191,26 @@ class RaiseInvoice(View):
                p = request.POST[x]
                q = request.POST[y]
                r = request.POST[z]
-               cost = int(cost) + (int(q)*int(r))
-               description_of_items.append(p)
+
+               if q!='' or r!='':
+                   cost = int(cost) + (int(q) * int(r))
+                   s = (int(q) * int(r))
+                   cost_of_items.append(q)
+                   amount.append(s)
+                   description_of_items.append(p)
+                   qty.append(r)
+
+
            subject = 'Invoice'
            message = form.cleaned_data['message']
            raise_for = form.cleaned_data['raise_for']
            currency = form.cleaned_data['currency']
-           #cost = form.cleaned_data['cost']
+
            sender = request.user.email
            reciever = form.cleaned_data['email_to']
            receivers = [reciever]
-           collect = ' '.join(description_of_items)
-           pdf = generate_certificate(collect,cost)
+
+           pdf = generate_certificate(description_of_items,cost_of_items,amount,cost,qty,raise_for,request)
            msg = EmailMessage(subject, message, sender, receivers)
            msg.attach_file('my_pdf.pdf', pdf)
            msg.send(fail_silently=True)
