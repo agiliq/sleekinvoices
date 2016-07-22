@@ -70,7 +70,7 @@ text-align: center;
 #index_page_tagline{
     text-align: center;
     font-size: 48px;
-    color: grey;
+    color: red;
     font-family: Harrington;
 
 }
@@ -85,7 +85,12 @@ text-align: center;
 
 
 
+#bholi{
 
+    color: gray;
+
+
+}
 
 
 
