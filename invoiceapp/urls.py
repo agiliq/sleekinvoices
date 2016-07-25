@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^status/(?P<id>[0-9]+)/$' , views.Changestatus , name='changestatus'),
     url(r'^login/$', views.login_user, name="login"),
     url(r'^logout/$', views.logout_user, name="logout"),
-
-
+    url(r'^clients/$', views.client, name='client'),
+    url(r'^add_client/$', views.add_client.as_view(),name='add_client'),
+    url(r'^deleteclient/(?P<pk>[0-9]+)/$' , views.deleteclient , name='deleteclient'),
 ]

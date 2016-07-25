@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import SigninForm, CompanyCredentialsForm, RaiseInvoiceForm
+from .forms import SigninForm, CompanyCredentialsForm, RaiseInvoiceForm,ClientForm
 from django.views.generic import View
 from django.views import generic
 from django.core.urlresolvers import reverse
-from .models import Company_credentials, Raise_invoice
+from .models import Company_credentials, Raise_invoice,Client
 from django.core.mail import send_mail, EmailMessage
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
@@ -107,14 +107,14 @@ def generate_certificate(description_of_items,cost_of_items,amount,cost,qty,rais
     canv.drawCentredString(102, 800, "INVOICE")
     canv.setFont('Helvetica-Bold', 8, leading=None)
 
-    #canv.drawCentredString(38, 824, "From:")
+    canv.drawCentredString(38, 824, "From:")
 
     bholi = Company_credentials.objects.get(pk=request.user.pk)
     canv.setFillColorRGB(0, 0, 255)
     canv.drawCentredString(480, 826, bholi.company_name)
     canv.drawCentredString(480, 813, bholi.website_url)
     canv.drawCentredString(480, 801, bholi.country + ',' + bholi.phone_number)
-    #canv.drawCentredString(480, 790, bholi.email)
+    canv.drawCentredString(480, 790, bholi.email)
     canv.setFillColorRGB(0, 0, 0)
 
     canv.drawCentredString(480, 790, "Raised on:" + str(datetime.date.today()) )
@@ -200,14 +200,17 @@ class RaiseInvoice(View):
                    description_of_items.append(p)
                    qty.append(r)
 
+           client = form.cleaned_data['client']
+           obg = Client.objects.get(organisation_name=client)
 
            subject = 'Invoice'
            message = form.cleaned_data['message']
-           raise_for = form.cleaned_data['raise_for']
+           #raise_for = form.cleaned_data['raise_for']
+           raise_for = obg.organisation_name + "," + obg.client_address
            currency = form.cleaned_data['currency']
 
            sender = request.user.email
-           reciever = form.cleaned_data['email_to']
+           reciever = obg.email
            receivers = [reciever]
 
            pdf = generate_certificate(description_of_items,cost_of_items,amount,cost,qty,raise_for,request)
@@ -217,6 +220,7 @@ class RaiseInvoice(View):
            raiseinvoice = form.save(commit=False)
            raiseinvoice.user = request.user
            raiseinvoice.cost = cost
+           raiseinvoice.client = client
            raiseinvoice.save()
            return redirect('invoiceapp:index')
         return redirect('invoiceapp:raiseinvoice')
@@ -249,11 +253,34 @@ def Changestatus(request,id):
     selected_invoice.save()
     return redirect('invoiceapp:estimates')
 
+def client(request):
+    all_clients = Client.objects.filter(user=request.user)
+    return render(request, 'invoiceapp/client.html', {'all_clients': all_clients})
+
+class add_client(View):
+    form_class = ClientForm
+    template_name = 'invoiceapp/add_client.html'
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form,})
+
+    def post(self, request):
+        form = self.form_class(request.POST or None, request.FILES or None)
+        if not request.user.is_authenticated():
+            return render(request, 'invoiceapp/login.html',{ 'message': 'Login First'})
+        if form.is_valid():
+            client = form.save(commit=False)
+            client.user = request.user
+            client.save()
+        return redirect(reverse('invoiceapp:client'))
 
 
 
-
-
+def deleteclient(request,pk):
+    client = Client.objects.get(pk=pk)
+    client.delete();
+    return redirect(reverse('invoiceapp:client'))
 
 
 

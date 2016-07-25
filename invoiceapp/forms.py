@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from . models import Company_credentials,Raise_invoice
+from . models import Company_credentials,Raise_invoice,Client
 
 class SigninForm(forms.ModelForm):
 
@@ -20,9 +20,15 @@ class CompanyCredentialsForm(forms.ModelForm):
 
 class RaiseInvoiceForm(forms.ModelForm):
 
-    raise_for = forms.CharField(widget=forms.TextInput({"placeholder":"ABC Infosolutions"}))
+    #raise_for = forms.CharField(widget=forms.TextInput({"placeholder":"ABC Infosolutions"}))
     currency =  forms.CharField(widget=forms.TextInput({"placeholder":"Dollars"}))
 
     class Meta:
         model = Raise_invoice
-        fields = ['raise_for','email_to','currency','message']
+        fields = ['client','currency','message']
+
+
+class ClientForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = ['organisation_name', 'email','client_address','country', 'phone_number']

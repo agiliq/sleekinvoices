@@ -70,7 +70,7 @@ text-align: center;
 #index_page_tagline{
     text-align: center;
     font-size: 48px;
-    color: red;
+    color: gray;
     font-family: Harrington;
 
 }
@@ -78,7 +78,7 @@ text-align: center;
 #taglinedescription{
     text-align: center;
     font-size: 28px;
-    color: grey;
+    color: gray;
     font-family: Harrington;
 }
 

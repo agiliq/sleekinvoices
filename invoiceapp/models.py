@@ -13,9 +13,19 @@ class Company_credentials(models.Model):
     def __str__(self):
         return self.company_name
 
+class Client(models.Model):
+    user = models.ForeignKey(User,default=1)
+    organisation_name = models.CharField(max_length=50)
+    email = models.EmailField(default='')
+    country = models.CharField(max_length=25)
+    phone_number = models.CharField(max_length=30)
+    client_address = models.CharField(max_length=500)
+    def __str__(self):
+        return self.organisation_name
 
 class Raise_invoice(models.Model):
     user = models.ForeignKey(User,default=1)
+    client = models.ForeignKey(Client,on_delete=models.CASCADE,default="ABC Infosolutions")
     raise_for = models.CharField(max_length=200)
     email_to = models.EmailField(default='xyz@yahoo.com')
     description_of_items = models.CharField(max_length=150)
