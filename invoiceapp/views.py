@@ -4,7 +4,7 @@ from .forms import SigninForm, CompanyCredentialsForm, RaiseInvoiceForm,ClientFo
 from django.views.generic import View
 from django.views import generic
 from django.core.urlresolvers import reverse
-from .models import Company_credentials, Raise_invoice,Client
+from .models import Company_credentials, Invoice,Client
 from django.core.mail import send_mail, EmailMessage
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
@@ -106,15 +106,13 @@ def generate_certificate(description_of_items,cost_of_items,amount,cost,qty,rais
     canv.setFont('Helvetica-Bold', 44, leading=None)
     canv.drawCentredString(102, 800, "INVOICE")
     canv.setFont('Helvetica-Bold', 8, leading=None)
-
-    canv.drawCentredString(38, 824, "From:")
-
-    bholi = Company_credentials.objects.get(pk=request.user.pk)
+    #canv.drawCentredString(38, 824, "From:")
+    #b = Company_credentials.objects.get(pk=request.user.pk)
     canv.setFillColorRGB(0, 0, 255)
-    canv.drawCentredString(480, 826, bholi.company_name)
-    canv.drawCentredString(480, 813, bholi.website_url)
-    canv.drawCentredString(480, 801, bholi.country + ',' + bholi.phone_number)
-    canv.drawCentredString(480, 790, bholi.email)
+    #canv.drawCentredString(480, 826, b.company_name)
+    #canv.drawCentredString(480, 813, b.website_url)
+    #canv.drawCentredString(480, 801, b.country + ',' + b.phone_number)
+    #canv.drawCentredString(480, 790, b.email)
     canv.setFillColorRGB(0, 0, 0)
 
     canv.drawCentredString(480, 790, "Raised on:" + str(datetime.date.today()) )
@@ -165,12 +163,12 @@ class RaiseInvoice(View):
 
     form_class = RaiseInvoiceForm
     template_name = 'invoiceapp/raise_invoice.html'
-    #Raise_invoiceformset = modelformset_factory(Raise_invoice, fields=('description_of_items','quantity','cost'), extra=2)
+    #Invoiceformset = modelformset_factory(Invoice, fields=('description_of_items','quantity','cost'), extra=2)
     def get(self, request):
         if not request.user.is_authenticated():
             return render(request,'invoiceapp/login.html',{'message':'Login First'})
         form = self.form_class(None)
-        #formset = self.Raise_invoiceformset(queryset=Raise_invoice.objects.none())
+        #formset = self.Invoiceformset(queryset=Invoice.objects.none())
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
@@ -216,12 +214,14 @@ class RaiseInvoice(View):
            pdf = generate_certificate(description_of_items,cost_of_items,amount,cost,qty,raise_for,request)
            msg = EmailMessage(subject, message, sender, receivers)
            msg.attach_file('my_pdf.pdf', pdf)
-           msg.send(fail_silently=True)
            raiseinvoice = form.save(commit=False)
+           raiseinvoice.raise_for = obg.organisation_name
            raiseinvoice.user = request.user
            raiseinvoice.cost = cost
            raiseinvoice.client = client
            raiseinvoice.save()
+           msg.send(fail_silently=True)
+
            return redirect('invoiceapp:index')
         return redirect('invoiceapp:raiseinvoice')
 
@@ -232,7 +232,7 @@ def Estimates(request):
     if not request.user.is_authenticated():
         return render(request,'invoiceapp/login.html',{'message':'Login First'})
     template_name = 'invoiceapp/estimates.html'
-    all_invoices = Raise_invoice.objects.filter(user=request.user).order_by('-pk')
+    all_invoices = Invoice.objects.filter(user=request.user).order_by('-pk')
     total = 0
     for invoice in all_invoices:
         total = total + invoice.cost
@@ -242,7 +242,7 @@ def Estimates(request):
 
 
 def Changestatus(request,id):
-    selected_invoice = Raise_invoice.objects.get(pk=id)
+    selected_invoice = Invoice.objects.get(pk=id)
     amount = request.POST['amount']
     amount = int(amount)
     cost = selected_invoice.cost
@@ -279,7 +279,7 @@ class add_client(View):
 
 def deleteclient(request,pk):
     client = Client.objects.get(pk=pk)
-    client.delete();
+    client.delete()
     return redirect(reverse('invoiceapp:client'))
 
 

@@ -23,9 +23,9 @@ class Client(models.Model):
     def __str__(self):
         return self.organisation_name
 
-class Raise_invoice(models.Model):
+class Invoice(models.Model):
     user = models.ForeignKey(User,default=1)
-    client = models.ForeignKey(Client,on_delete=models.CASCADE,default="ABC Infosolutions")
+    client = models.ForeignKey(Client,on_delete=models.CASCADE,default="")
     raise_for = models.CharField(max_length=200)
     email_to = models.EmailField(default='xyz@yahoo.com')
     description_of_items = models.CharField(max_length=150)
