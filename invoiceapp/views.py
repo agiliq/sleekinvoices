@@ -206,6 +206,9 @@ class RaiseInvoice(View):
            #raise_for = form.cleaned_data['raise_for']
            raise_for = obg.organisation_name + "," + obg.client_address
            currency = form.cleaned_data['currency']
+        #   by = Company_credentials.objects.filter(user=request.user)
+          # print(by)
+
 
            sender = request.user.email
            reciever = obg.email
@@ -218,6 +221,7 @@ class RaiseInvoice(View):
            raiseinvoice.raise_for = obg.organisation_name
            raiseinvoice.user = request.user
            raiseinvoice.cost = cost
+           raiseinvoice.raised_by = 'Rakesh kumar and sons'
            raiseinvoice.client = client
            raiseinvoice.save()
            msg.send(fail_silently=True)
@@ -283,7 +287,9 @@ def deleteclient(request,pk):
     return redirect(reverse('invoiceapp:client'))
 
 
-
+def invoices_for_me(request):
+    objects = Invoice.objects.filter(email_to=request.user.email)
+    return render(request,'invoiceapp/invoices_for_me.html',{'objects':objects})
 
 
 

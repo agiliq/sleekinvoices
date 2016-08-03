@@ -27,6 +27,7 @@ class Invoice(models.Model):
     user = models.ForeignKey(User,default=1)
     client = models.ForeignKey(Client,on_delete=models.CASCADE,default="")
     raise_for = models.CharField(max_length=200)
+    raised_by = models.CharField(max_length=50,default='')
     email_to = models.EmailField(default='xyz@yahoo.com')
     description_of_items = models.CharField(max_length=150)
     currency = models.CharField(max_length=10)

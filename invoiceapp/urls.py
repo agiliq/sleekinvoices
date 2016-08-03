@@ -15,5 +15,5 @@ urlpatterns = [
     url(r'^logout/$', views.logout_user, name="logout"),
     url(r'^clients/$', views.client, name='client'),
     url(r'^add_client/$', views.add_client.as_view(),name='add_client'),
-   
+    url(r'^myinvoices/$', views.invoices_for_me, name='invoices_for_me'),
 ]
