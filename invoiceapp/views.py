@@ -220,9 +220,12 @@ class RaiseInvoice(View):
            raiseinvoice = form.save(commit=False)
            raiseinvoice.raise_for = obg.organisation_name
            raiseinvoice.user = request.user
+           raiseinvoice.email_to = obg.email
            raiseinvoice.cost = cost
-           raiseinvoice.raised_by = 'Rakesh kumar and sons'
+           raiseinvoice.raised_by = request.user.email
            raiseinvoice.client = client
+           total_items = [int(x) for x in qty]
+           raiseinvoice.quantity = sum(total_items)
            raiseinvoice.save()
            msg.send(fail_silently=True)
 

@@ -4,8 +4,6 @@
     <list default="true" id="4b1b53ba-c230-43e3-a352-e64aa637faaa" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/invoiceapp/models.py" afterPath="$PROJECT_DIR$/invoiceapp/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/invoiceapp/urls.py" afterPath="$PROJECT_DIR$/invoiceapp/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/invoiceapp/views.py" afterPath="$PROJECT_DIR$/invoiceapp/views.py" />
     </list>
     <ignored path="invoice.iws" />
@@ -37,8 +35,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/invoiceapp/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1609">
-              <caret line="290" column="65" selection-start-line="290" selection-start-column="65" selection-end-line="290" selection-end-column="65" />
+            <state relative-caret-position="470">
+              <caret line="224" column="54" selection-start-line="224" selection-start-column="54" selection-end-line="224" selection-end-column="54" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -49,7 +47,7 @@
       <file leaf-file-name="invoices_for_me.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/invoiceapp/templates/invoiceapp/invoices_for_me.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="685">
+            <state relative-caret-position="850">
               <caret line="50" column="23" selection-start-line="50" selection-start-column="23" selection-end-line="50" selection-end-column="23" />
               <folding />
             </state>
@@ -81,7 +79,7 @@
       <file leaf-file-name="client.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/invoiceapp/templates/invoiceapp/client.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
+            <state relative-caret-position="578">
               <caret line="34" column="12" selection-start-line="0" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
               <folding />
             </state>
@@ -91,8 +89,8 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/invoiceapp/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="17" column="73" selection-start-line="17" selection-start-column="73" selection-end-line="17" selection-end-column="73" />
+            <state relative-caret-position="306">
+              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -176,6 +174,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -254,8 +254,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -569,7 +567,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24670571" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24670571" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -859,7 +857,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -881,7 +878,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="34" column="12" selection-start-line="34" selection-start-column="12" selection-end-line="34" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -901,16 +897,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/invoiceapp/templates/invoiceapp/client.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
+        <state relative-caret-position="578">
           <caret line="34" column="12" selection-start-line="0" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/invoiceapp/templates/invoiceapp/invoices_for_me.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="50" column="23" selection-start-line="50" selection-start-column="23" selection-end-line="50" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/invoiceapp/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="17" column="73" selection-start-line="17" selection-start-column="73" selection-end-line="17" selection-end-column="73" />
+        <state relative-caret-position="306">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -923,18 +927,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/invoiceapp/templates/invoiceapp/invoices_for_me.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="685">
-          <caret line="50" column="23" selection-start-line="50" selection-start-column="23" selection-end-line="50" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/invoiceapp/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1609">
-          <caret line="290" column="65" selection-start-line="290" selection-start-column="65" selection-end-line="290" selection-end-column="65" />
+        <state relative-caret-position="470">
+          <caret line="224" column="54" selection-start-line="224" selection-start-column="54" selection-end-line="224" selection-end-column="54" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
