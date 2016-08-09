@@ -46,17 +46,46 @@
 {% if message %}
   <h3 style="text-align: center;margin-top: 40px">{{ message }}</h3>
 {% endif %}
-{% for object in objects %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Client</th>
+            <th>Cost</th>
+            <th>Raised on</th>
+			<th>Status</th>
+			<th> Amount Paid</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for object in objects %}
+          <tr>
+            <td>{{ object.raised_by }}</td>
+            <td>{{ object.cost }}</td>
+            <td>{{ object.date_created }}</td>
+			<td>
+                  {% if object.cost == 0 %}
+                       paid
+                  {% else %}
+                       unpaid
+                  {% endif %}
+            </td>
+			<td>
+              <form action = "{% url 'invoiceapp:changestatus' object.id %}" method="post">
+                  {% csrf_token %}
+                  <input type="text" name="amount" maxlength="15"/>
+                  <input type="submit" value="Submit"/>
+              </form>
+          </td>
+          </tr>
+      {% endfor %}
 
-    {{ object.raised_by }}
-{% endfor %}
+    </tbody>
+</table>
+
 
 </body>
 
 </html>
-
-
-
 
 
 

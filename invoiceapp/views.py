@@ -107,11 +107,11 @@ def generate_certificate(description_of_items,cost_of_items,amount,cost,qty,rais
     canv.drawCentredString(102, 800, "INVOICE")
     canv.setFont('Helvetica-Bold', 8, leading=None)
     #canv.drawCentredString(38, 824, "From:")
-    #b = Company_credentials.objects.get(pk=request.user.pk)
+    b = Company_credentials.objects.get(user=request.user)
     canv.setFillColorRGB(0, 0, 255)
-    #canv.drawCentredString(480, 826, b.company_name)
-    #canv.drawCentredString(480, 813, b.website_url)
-    #canv.drawCentredString(480, 801, b.country + ',' + b.phone_number)
+    canv.drawCentredString(480, 826, b.company_name)
+    canv.drawCentredString(480, 813, b.email)
+    canv.drawCentredString(480, 801, b.country + ',' + b.phone_number)
     #canv.drawCentredString(480, 790, b.email)
     canv.setFillColorRGB(0, 0, 0)
 
@@ -222,7 +222,8 @@ class RaiseInvoice(View):
            raiseinvoice.user = request.user
            raiseinvoice.email_to = obg.email
            raiseinvoice.cost = cost
-           raiseinvoice.raised_by = request.user.email
+           x = Company_credentials.objects.get(user=request.user)
+           raiseinvoice.raised_by =  str(x.company_name)
            raiseinvoice.client = client
            total_items = [int(x) for x in qty]
            raiseinvoice.quantity = sum(total_items)
@@ -291,7 +292,7 @@ def deleteclient(request,pk):
 
 
 def invoices_for_me(request):
-    objects = Invoice.objects.filter(email_to=request.user.email)
+    objects = Invoice.objects.filter(email_to=request.user.email).order_by('-pk')
     return render(request,'invoiceapp/invoices_for_me.html',{'objects':objects})
 
 
