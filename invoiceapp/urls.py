@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^raiseinvoice/$', views.RaiseInvoice.as_view(),name='raiseinvoice'),
     url(r'^$', views.Index.as_view(), name='index'),
     url(r'^account/$', views.Account.as_view(),name='account'),
+	
+	url(r'^update_account/(?P<pk>[0-9]+)/$' , views.AccountUpdate.as_view(),name='updateaccount'),
     url(r'^estimates/$', views.Estimates,name='estimates'),
 	 url(r'^deleteclient/(?P<pk>[0-9]+)/$' , views.deleteclient , name='deleteclient'),# /*Functioning completed*/ 
     url(r'^status/(?P<id>[0-9]+)/$' , views.Changestatus , name='changestatus'),

@@ -15,6 +15,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Paragraph
 from reportlab.pdfgen.canvas import Canvas
 from django.forms import modelformset_factory
+from django.views.generic.edit import CreateView,UpdateView,DeleteView
 
 def login_user(request):
     if request.method == "POST":
@@ -63,6 +64,11 @@ class Account(View):
         return render(request, self.template_name, {'message': 'Fill your credentials again'})
 
 
+class AccountUpdate(UpdateView):
+    model = Company_credentials
+    fields = ['email','company_name','company_address','country','phone_number','website_url']
+		
+		
 class Index(View):
     form_class = SigninForm
     template_name = "invoiceapp/index.html"
