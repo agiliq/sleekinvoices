@@ -91,7 +91,11 @@
 </table>
 <h5>Amount Awaited: {{ amount }} Dollars</h5>
 
-
+<form action = "{% url 'invoiceapp:updateaccount' 19 %}" method="post">
+                  {% csrf_token %}
+                  
+                  <input type="submit" value="Submit"/>
+              </form>
 
 </div>
 </body>

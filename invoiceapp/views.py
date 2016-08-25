@@ -15,7 +15,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Paragraph
 from reportlab.pdfgen.canvas import Canvas
 from django.forms import modelformset_factory
-from django.views.generic.edit import CreateView,UpdateView,DeleteView
+from django.views.generic.edit import UpdateView
 
 def login_user(request):
     if request.method == "POST":
