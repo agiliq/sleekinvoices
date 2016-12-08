@@ -1,0 +1,28 @@
+{% load staticfiles i18n %}<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}" data-js="dynamic-favicon">
+    <title>{% block title %}Hookah Royal{% endblock title %}</title>
+    <meta content='width=device-width, initial-scale=1, minimal-ui' name='viewport'>
+    <meta name="description" content="{% block meta_description %}{% endblock meta_description %}">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+    {% block css %}
+
+    {% endblock %}
+  </head>
+  <body>
+  {% block content %}
+
+  {% endblock %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  {% block js %}
+  
+  {% endblock %}
+
+  </body>
+  
+</html>

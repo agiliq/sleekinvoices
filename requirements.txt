@@ -1,7 +1,4 @@
-dj-database-url==0.4.0
-Django==1.9.4
-gunicorn==19.4.5
-psycopg2==2.6.1
-whitenoise==3.2
-reportlab==3.3.0
-
+Django==1.10.2
+psycopg2==2.6.2
+django-phonenumber-field==1.0.0
+Pillow==3.4.2
